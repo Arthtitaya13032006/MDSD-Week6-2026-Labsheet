@@ -400,6 +400,8 @@ ElevatedButton(
 
 > ✅ **Checkpoint 3.1** ถ่ายภาพหน้าจอ Debug Console ที่แสดง Status Code (ควรเป็น `201 Created`) พร้อม Response Body 
 
+<img width="715" height="210" alt="image" src="https://github.com/user-attachments/assets/8a885a6d-cd4d-479c-a3c1-154eec618667" />
+
 
 
 
