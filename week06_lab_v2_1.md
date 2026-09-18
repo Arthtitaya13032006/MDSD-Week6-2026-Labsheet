@@ -597,7 +597,25 @@ Future<Weather> fetchWeatherWithDio(String city) async {
 > ✅ **Checkpoint 5.3** แสดงโค้ดเงื่อนไข `DioExceptionType` เพิ่มเติมที่เขียนเองในขั้นตอนที่ 5.4 
 
 ```text
-บันทึกคำตอบที่นี่
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.connectionTimeout) {
+        throw Exception('การเชื่อมต่อหมดเวลา กรุณาลองใหม่อีกครั้ง');
+      } else if (e.type == DioExceptionType.badResponse) {
+        // เซิร์ฟเวอร์ตอบกลับมาแล้วแต่ status code ผิดพลาด (เช่น 404, 500)
+        if (e.response?.statusCode == 404) {
+          throw Exception('ไม่พบข้อมูลเมืองที่ค้นหา (รหัส: 404)');
+        }
+        throw Exception('เซิร์ฟเวอร์ตอบกลับผิดพลาด (${e.response?.statusCode})');
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+        // เพิ่มเติม: รอนานเกินกำหนดขณะรับข้อมูลจากเซิร์ฟเวอร์
+        throw Exception('การรอรับข้อมูลจากเซิร์ฟเวอร์หมดเวลา กรุณาลองใหม่อีกครั้ง');
+      } else if (e.type == DioExceptionType.connectionError) {
+        // เพิ่มเติม: ปัญหาการเชื่อมต่อระดับเน็ตเวิร์ก เช่น ไม่มีอินเทอร์เน็ต หรือ DNS ล้มเหลว
+        throw Exception('ไม่สามารถเชื่อมต่ออินเทอร์เน็ตได้ กรุณาตรวจสอบการเชื่อมต่อ');
+      }
+      throw Exception('เกิดข้อผิดพลาด: ${e.message}');
+    }
+
 ```
 ---
 
