@@ -498,9 +498,8 @@ FormatException: "ข้อมูลที่ได้รับจากเซ�
 ```
 
 > ✅ **Checkpoint 4.2** ถ่ายภาพหน้าจอ Debug Console ที่แสดงผลลัพธ์จริงจากการเรียก `fetchAiProducts()` (เช่น รายการสินค้าที่ print ออกมา) 
-```text
-บันทึกรูปที่นี่
-```
+<img width="717" height="365" alt="image" src="https://github.com/user-attachments/assets/36bc7eca-aa19-44ec-b76e-0fff7cec40e8" />
+
 
 ---
 
