@@ -400,7 +400,7 @@ ElevatedButton(
 
 > ✅ **Checkpoint 3.1** ถ่ายภาพหน้าจอ Debug Console ที่แสดง Status Code (ควรเป็น `201 Created`) พร้อม Response Body 
 
-<img width="828" height="223" alt="image" src="https://github.com/user-attachments/assets/f0f85e8e-5a0b-4e2f-a036-29035153a323" />
+
 
 
 ### ขั้นตอนที่ 3.2 — 🧠 คิดเอง/ออกแบบเอง
@@ -424,11 +424,9 @@ Future<void> updateDemoPost() async {
 }
 ```
 
-> ✅ **Checkpoint 3.2** ถ่ายภาพหน้าจอ Debug Console ที่แสดง Status Code ของการเรียก PUT (ควรเป็น `200 OK`) 
+> ✅ **Checkpoint 3.2** ถ่ายภาพหน้าจอ Debug Console ที่แสดง Status Code ของการเรียก PUT (ควรเป็น `200 OK`)
+<img width="840" height="243" alt="image" src="https://github.com/user-attachments/assets/9d7b4b9c-0815-4906-ac6c-14e1fa00d03d" />
 
-```text
-บันทึกรูปและคำตอบที่นี่
-```
 ---
 
 ## ส่วนที่ 4: ใช้ AI ช่วย Generate โค้ด API Client
