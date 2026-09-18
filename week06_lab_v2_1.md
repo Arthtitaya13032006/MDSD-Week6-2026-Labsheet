@@ -477,7 +477,24 @@ GET https://fakestoreapi.com/products
 ไม่ว่าจะเลือกแบบไหน เป้าหมายคือต้องเห็น **ผลลัพธ์จริงจาก Fake Store API** ปรากฏขึ้นมา  ถ้ารันแล้วเจอ error หรือโค้ดจาก Gemini ผิดพลาด (เช่น import ขาด, ชื่อ field ไม่ตรงกับ JSON จริง) ให้จดบันทึกข้อความ error และวิธีแก้ไขไว้ในด้านล่าง
 
 ```text
-บันทึก error และการแก้ไขที่นี่
+สรุปสิ่งที่ได้จัดเตรียมและตรวจสอบความเรียบร้อย:
+1.Model Class (AiProduct):
+ประกาศโครงสร้างฟิลด์ครบตาม JSON (id, title, price, description, category, image)
+fromJson ป้องกัน Type Mismatch ด้วยการแปลงค่าตัวเลขผ่าน (json['price'] as num?)?.toDouble() ?? 0.0 เสมอ เพื่อไม่ให้แอป Crash เมื่อฝั่งเซิร์ฟเวอร์ส่งตัวเลขจำนวนเต็ม (int) มา
+2.ฟังก์ชัน fetchAiProducts():
+เรียกใช้ http.get ไปยัง https://fakestoreapi.com/products
+กำหนด .timeout(const Duration(seconds: 10)) ไม่เกิน 10 วินาทีตามข้อกำหนด
+ส่งคืนค่าเป็น Future<List<AiProduct>>
+3.การจัดการข้อผิดพลาดภาษาไทย (Error Handling):
+TimeoutException: "การเชื่อมต่อเซิร์ฟเวอร์หมดเวลา (เกิน 10 วินาที) กรุณาลองใหม่อีกครั้ง"
+http.ClientException / SocketException: "ไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของคุณ"
+FormatException: "ข้อมูลที่ได้รับจากเซิร์ฟเวอร์ไม่ถูกต้องหรือไม่ตรงตามรูปแบบ"
+ส่งต่อข้อความผ่าน ApiException ให้ UI นำไปแสดงผลแก่ผู้ใช้ได้ทันที
+4.Interactive Tester ในหน้าพรีวิว:
+มีระบบทดสอบดึงข้อมูลจริงจาก fakestoreapi.com
+มีโหมดจำลอง Error แต่ละกรณี (Timeout, Offline, Malformed JSON) เพื่อตรวจสอบการแสดงข้อความภาษาไทย
+มีแท็บคัดลอกโค้ดแยกแต่ละส่วน และโค้ดตัวอย่างการนำไปใช้ร่วมกับ FutureBuilder บน Flutter
+
 ```
 
 > ✅ **Checkpoint 4.2** ถ่ายภาพหน้าจอ Debug Console ที่แสดงผลลัพธ์จริงจากการเรียก `fetchAiProducts()` (เช่น รายการสินค้าที่ print ออกมา) 
