@@ -579,7 +579,19 @@ Future<Weather> fetchWeatherWithDio(String city) async {
 ```
 
 > ✅ **Checkpoint 5.2** เปรียบเทียบสั้น ๆ ระหว่าง `http` กับ `dio` อย่างน้อย 3 ประเด็น โดยอ้างอิงจากสิ่งที่สังเกตได้จริงตอนทดลองในขั้นตอนที่ 5.3 เช่น การแปลง JSON อัตโนมัติ, การกำหนด Query Parameters, และรูปแบบการจัดการ Exception (`DioException` เทียบกับการดักจับหลายชนิดแยกกันแบบ `http`)
+เปรียบเทียบระหว่าง http และ dio (3 ประเด็น):
 
+1.การแปลงข้อมูล JSON (JSON Decoding):
+ http: ได้รับข้อมูลเป็น String ดิบ ต้องเรียกคำสั่ง jsonDecode() เอง
+ dio: แปลง JSON เป็น Map หรือ List ให้อัตโนมัติใน response.data โดยไม่ต้องเรียก jsonDecode()
+ 
+2.การส่ง Query Parameters:
+ http: ต้องนำตัวแปรมาต่อสตริงเข้ากับ URL เอง (เช่น '?q=$city&appid=$key')
+ dio: รองรับพารามิเตอร์ queryParameters: {...} เป็น Map ได้โดยตรง และจัดการ Encode ตัวอักษรพิเศษให้อัตโนมัติ
+ 
+3.การจัดการ Exception:
+ http: โยน Exception แยกหลายชนิดตามสถานการณ์ เช่น TimeoutException, ClientException, SocketException
+ dio: รวบรวมทุกข้อผิดพลาดเกี่ยวกับเครือข่ายไว้ที่ DioException ตัวเดียว แล้วแยกแยะสาเหตุผ่าน e.type เช่น connectionTimeout, receiveTimeout, connectionError, badResponse ทำให้จัดการได้ง่ายและเป็นระเบียบกว่า
 
 >
 > ✅ **Checkpoint 5.3** แสดงโค้ดเงื่อนไข `DioExceptionType` เพิ่มเติมที่เขียนเองในขั้นตอนที่ 5.4 
